@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>styl1sh.js | animation test</title>
-    <script
-      type="module"
-      src="../dist/styl1sh.min.js"
-      defer
-    ></script>
-  </head>
-  <body>
-    <div
-      class="box"
-      style="width: 100px; height: 100px; background: hotpink"
-    ></div>
+<head>
+  <meta charset="UTF-8" />
+  <title>styl1sh.js | animation test</title>
+  <script type="module" src="../dist/styl1sh.min.js" defer></script>
+</head>
+<body>
+  <h1>styl1sh.js | animation test</h1>
+  
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        styl1sh.defineDynamicStyles((event) => {
-          event.register("animationFrame");
-          const t = performance.now() / 1000;
-          return { ".box": { transform: `rotate(${t}rad)` } };
-        });
-      });
-    </script>
-  </body>
+  <div class="box" style="width:100px;height:100px;background:hotpink;"></div>
+
+  <script type="module">
+    styl1sh.defineDynamicStyles((ctx) => {
+      ctx.register("animationFrame");
+
+      return {
+        ".box": {
+          transform: `rotate(${performance.now() / 1000}rad)` 
+        },
+      };
+    });
+
+    styl1sh.defineDynamicStyles((ctx) => {
+      ctx.register("animationFrame");
+
+      return {
+        ".box": {
+          transform: `rotate(${performance.now() / 1000}rad)` 
+        },
+      };
+    });
+
+    document.addEventListener("click", "")
+  </script>
+</body>
 </html>

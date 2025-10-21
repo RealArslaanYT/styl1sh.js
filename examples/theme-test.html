@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>styl1sh.js | theme test</title>
+    <script type="module" src="../dist/styl1sh.min.js" defer></script>
+  </head>
+  <body>
+    <h1>styl1sh.js | theme test</h1>
+    <p>This is a simple test of dynamically changing the theme! Change your system theme to change the site theme!</p>
+    <script type="module">
+      styl1sh.defineDynamicStyles((ctx) => {
+        ctx.register("useTheme");
+
+        return {
+          "html, body": {
+            background: styl1sh.runtimeState.currentTheme === "dark" ? "#111" : "#fff",
+            color: styl1sh.runtimeState.currentTheme === "dark" ? "#eee" : "#000",
+          },
+        };
+      });
+    </script>
+  </body>
+</html>

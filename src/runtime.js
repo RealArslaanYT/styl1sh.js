@@ -1,20 +1,23 @@
 // runtime.js
+
 export const eventMap = {
   animationFrame: [],
+  DOMContentLoaded: [],
+  useTheme: [],
   resize: [],
   scroll: [],
+  keydown: [],
+  click: [],
 };
 
-// export function createSheet() {
-//   const el = document.createElement('style');
-//   el.dataset.styl1sh = '';
-//   document.head.appendChild(el);
-//   return el.sheet;
-// }
+export const runtimeState = {
+  currentTheme: window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light",
+};
 
 export function applyRules(rules) {
   for (const [selector, props] of Object.entries(rules)) {
-    // cache elements per selector
     if (!applyRules.elementCache) applyRules.elementCache = new Map();
     let elements = applyRules.elementCache.get(selector);
     if (!elements) {
@@ -30,18 +33,20 @@ export function applyRules(rules) {
   }
 }
 
-export function startRuntimeLoop(fps = 60) {
-  let last = 0;
-  const interval = 1000 / fps;
+export function triggerEvent(type) {
+  const handlers = eventMap[type];
+  if (!handlers) return;
+  for (const fn of handlers) {
+    fn();
+  }
+}
 
-  function loop(now = performance.now()) {
-    if (now - last >= interval) {
-      for (const fn of eventMap.animationFrame) fn();
-      last = now;
-    }
+export function startRuntimeLoop() {
+  function loop() {
+    for (const fn of eventMap.animationFrame) fn(); // only runs registered callbacks
+
     requestAnimationFrame(loop);
   }
-
   requestAnimationFrame(loop);
 
   window.addEventListener("resize", () => {
@@ -50,4 +55,27 @@ export function startRuntimeLoop(fps = 60) {
   window.addEventListener("scroll", () => {
     for (const fn of eventMap.scroll) fn();
   });
+  window.addEventListener("keydown", () => {
+    for (const fn of eventMap.keydown) fn();
+  });
+  window.addEventListener("click", () => {
+    for (const fn of eventMap.click) fn();
+  });
+  window.document.addEventListener("DOMContentLoaded", () => {
+    for (const fn of eventMap.DOMContentLoaded) fn();
+
+    const useThemeMediaQuery = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    );
+    useThemeMediaQuery.addEventListener("change", (e) => {
+      runtimeState.currentTheme = e.matches ? "dark" : "light";
+      triggerEvent("useTheme");
+    });
+    runtimeState.currentTheme = useThemeMediaQuery.matches ? "dark" : "light";
+    triggerEvent("useTheme");
+  });
+
+  console.log(
+    "[styl1sh.js] started runtime loop and initialized event listeners"
+  );
 }
