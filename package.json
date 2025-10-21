@@ -1,0 +1,19 @@
+{
+  "name": "styl1sh.js",
+  "version": "1.0.0",
+  "description": "stylesheets but in javascript",
+  "license": "GPL-3.0",
+  "author": "Arslaan Pathan",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "esbuild src/index.js --bundle --minify --format=esm --outfile=dist/styl1sh.min.js",
+    "watch": "esbuild src/index.js --bundle --minify --format=esm --outfile=dist/styl1sh.min.js --watch",
+    "lint": "eslint src/**/*.js",
+    "clean": "rimraf dist/styl1sh.min.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.11",
+    "eslint": "^9.38.0"
+  }
+}
