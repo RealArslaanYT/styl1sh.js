@@ -1,5 +1,5 @@
 // styles.js
-import { createSheet, applyRules, eventMap } from './runtime.js';
+import { createSheet, applyRulesIfChanged, applyRules, eventMap } from './runtime.js';
 
 export function defineStaticStyles(rules) {
   const sheet = createSheet();
@@ -18,7 +18,7 @@ export function defineDynamicStyles(fn) {
 
   function update() {
     const newRules = fn(ctx);
-    if (newRules) applyRules(newRules, sheet);
+    if (newRules) applyRulesIfChanged(newRules, sheet);
   }
 
   update();

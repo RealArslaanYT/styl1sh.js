@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>styl1sh.js | animation test</title>
+    <script
+      type="module"
+      src="../dist/styl1sh.min.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div
+      class="box"
+      style="width: 100px; height: 100px; background: hotpink"
+    ></div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        styl1sh.defineDynamicStyles((event) => {
+          event.register("animationFrame");
+          const t = performance.now() / 1000;
+          return { ".box": { transform: `rotate(${t}rad)` } };
+        });
+      });
+    </script>
+  </body>
+</html>
