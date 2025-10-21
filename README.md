@@ -1,6 +1,7 @@
 # styl1sh.js
 css but better and in javascript
 
+
 `stylish.js` is a lightweight CSS-in-JS library that makes your styles dynamic.
 
 ## Features
@@ -11,6 +12,7 @@ css but better and in javascript
 
 ## Getting Started
 To get started with styl1sh.js, add the following tag to the HEAD of your HTML:
+
 `https://raw.githubusercontent.com/RealArslaanYT/styl1sh.js/refs/heads/main/dist/styl1sh.min.js`
 
 That's it! For some examples, go to the examples directory of this repository.
