@@ -1,6 +1,6 @@
 // index.js
 
-import { startRuntimeLoop, triggerEvent, runtimeState } from './runtime.js';
+import { startRuntimeLoop, triggerEvent, runtimeState, setTheme } from './runtime.js';
 import { defineStaticStyles, defineDynamicStyles } from './styles.js';
 
 (function initStyl1sh() {
@@ -12,6 +12,7 @@ import { defineStaticStyles, defineDynamicStyles } from './styles.js';
     defineStaticStyles,
     defineDynamicStyles,
     triggerEvent,
+    setTheme,
     runtimeState
   };
 

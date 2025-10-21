@@ -41,6 +41,11 @@ export function triggerEvent(type) {
   }
 }
 
+export function setTheme(theme) {
+  runtimeState.currentTheme = theme;
+  triggerEvent("useTheme");
+}
+
 export function startRuntimeLoop() {
   function loop() {
     for (const fn of eventMap.animationFrame) fn(); // only runs registered callbacks
