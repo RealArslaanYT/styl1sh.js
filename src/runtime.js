@@ -5,40 +5,33 @@ export const eventMap = {
   scroll: [],
 };
 
-let lastRules = null;
+// export function createSheet() {
+//   const el = document.createElement('style');
+//   el.dataset.styl1sh = '';
+//   document.head.appendChild(el);
+//   return el.sheet;
+// }
 
-export function createSheet() {
-  const el = document.createElement('style');
-  el.dataset.styl1sh = '';
-  document.head.appendChild(el);
-  return el.sheet;
-}
-
-export function applyRulesIfChanged(rules, sheet) {
-  if (lastRules && JSON.stringify(lastRules) === JSON.stringify(rules)) return;
-  while (sheet.cssRules.length) sheet.deleteRule(0);
+export function applyRules(rules) {
   for (const [selector, props] of Object.entries(rules)) {
-    const body = Object.entries(props)
-      .map(([k, v]) => `${k}: ${v};`)
-      .join(' ');
-    sheet.insertRule(`${selector} { ${body} }`, sheet.cssRules.length);
-  }
-  lastRules = rules;
-}
+    // cache elements per selector
+    if (!applyRules.elementCache) applyRules.elementCache = new Map();
+    let elements = applyRules.elementCache.get(selector);
+    if (!elements) {
+      elements = document.querySelectorAll(selector);
+      applyRules.elementCache.set(selector, elements);
+    }
 
-export function applyRules(rules, sheet) {
-  while (sheet.cssRules.length) sheet.deleteRule(0);
-  for (const [selector, props] of Object.entries(rules)) {
-    const body = Object.entries(props)
-      .map(([k, v]) => `${k}: ${v};`)
-      .join(' ');
-    sheet.insertRule(`${selector} { ${body} }`, sheet.cssRules.length);
+    for (const el of elements) {
+      for (const [prop, value] of Object.entries(props)) {
+        el.style[prop] = value;
+      }
+    }
   }
 }
 
-export function startRuntimeLoop() {
+export function startRuntimeLoop(fps = 60) {
   let last = 0;
-  const fps = 30; // desired max update frequency
   const interval = 1000 / fps;
 
   function loop(now = performance.now()) {
@@ -48,12 +41,13 @@ export function startRuntimeLoop() {
     }
     requestAnimationFrame(loop);
   }
+
   requestAnimationFrame(loop);
 
-  window.addEventListener('resize', () => {
+  window.addEventListener("resize", () => {
     for (const fn of eventMap.resize) fn();
   });
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     for (const fn of eventMap.scroll) fn();
   });
 }

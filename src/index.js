@@ -5,7 +5,7 @@ import { defineStaticStyles, defineDynamicStyles } from './styles.js';
 (function initStyl1sh() {
   if (window.styl1sh) return;
 
-  startRuntimeLoop();
+  startRuntimeLoop(10);
 
   window.styl1sh = {
     defineStaticStyles,
