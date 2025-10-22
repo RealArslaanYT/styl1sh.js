@@ -18,7 +18,8 @@ export function defineDynamicStyles(fn) {
     registered: {}
   };
 
-  function update() {
+  function update(event = {}) {
+    ctx.event = event;
     const newRules = fn(ctx);
     if (newRules) applyRules(newRules);
     ctx.firstRun = false;

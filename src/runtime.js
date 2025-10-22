@@ -60,11 +60,11 @@ export function startRuntimeLoop() {
   window.addEventListener("scroll", () => {
     for (const fn of eventMap.scroll) fn();
   });
-  window.addEventListener("keydown", () => {
-    for (const fn of eventMap.keydown) fn();
+  window.addEventListener("keydown", (event) => {
+    for (const fn of eventMap.keydown) fn({key: event.key, code: event.code});
   });
-  window.addEventListener("click", () => {
-    for (const fn of eventMap.click) fn();
+  window.addEventListener("click", (event) => {
+    for (const fn of eventMap.click) fn({clientX: event.clientX, clientY: event.clientY, screenX: event.screenX, screenY: event.screenY});
   });
   window.document.addEventListener("DOMContentLoaded", () => {
     for (const fn of eventMap.DOMContentLoaded) fn();
