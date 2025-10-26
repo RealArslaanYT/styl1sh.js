@@ -3,7 +3,7 @@
 import { applyRules, eventMap } from "./runtime.js";
 
 export function defineStaticStyles(rules) {
-  applyRules(rules, sheet);
+  applyRules(rules);
 }
 export function defineDynamicStyles(fn) {
   const ctx = {
