@@ -33,11 +33,11 @@ export function applyRules(rules) {
   }
 }
 
-export function triggerEvent(type) {
+export function triggerEvent(type, event = {}) {
   const handlers = eventMap[type];
   if (!handlers) return;
   for (const fn of handlers) {
-    fn();
+    fn(event);
   }
 }
 
