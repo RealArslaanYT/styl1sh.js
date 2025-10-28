@@ -18,7 +18,6 @@ export const runtimeState = {
 
 export function applyRules(rules) {
   for (const [selector, props] of Object.entries(rules)) {
-    console.log("running querySelectorAll");
     let elements = document.querySelectorAll(selector);
 
     for (const el of elements) {
