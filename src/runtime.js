@@ -18,12 +18,8 @@ export const runtimeState = {
 
 export function applyRules(rules) {
   for (const [selector, props] of Object.entries(rules)) {
-    if (!applyRules.elementCache) applyRules.elementCache = new Map();
-    let elements = applyRules.elementCache.get(selector);
-    if (!elements) {
-      elements = document.querySelectorAll(selector);
-      applyRules.elementCache.set(selector, elements);
-    }
+    console.log("running querySelectorAll");
+    let elements = document.querySelectorAll(selector);
 
     for (const el of elements) {
       for (const [prop, value] of Object.entries(props)) {
